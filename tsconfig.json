@@ -24,7 +24,10 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/global-style": ["./src/styles/globals.css"],
+      "@/ui/*": ["./src/components/ui/*"],
+      "@/util/*": ["./src/components/util/*"]
     }
   },
   "include": [
