@@ -8,3 +8,7 @@ export interface SiteConfig {
     github: string
   }
 }
+
+export interface LayoutProps {
+  children: React.ReactNode
+}
