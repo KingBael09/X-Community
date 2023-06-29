@@ -38,7 +38,6 @@ const config = {
         prefer: "type-imports",
         fixStyle: "inline-type-imports",
       },
-      
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     "@next/next/no-html-link-for-pages": "off",

@@ -1,12 +1,15 @@
 "use client"
 
-import { useState } from "react"
+import { useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { createCommunityAction } from "@/actions/community"
+import { Button } from "@/ui/button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
-import { Button } from "../ui/button"
+import { XFormSchema, type ZForm } from "@/lib/validators/community"
+import { toast } from "@/hooks/use-toast"
+
 import {
   Form,
   FormControl,
@@ -19,40 +22,43 @@ import {
 import { Input } from "../ui/input"
 import { Icons } from "../util/icons"
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Community name must be at least 2 characters.",
-    })
-    .max(25, {
-      message: "Community name must be under 25 characters.",
-    })
-    .regex(/^[^\s]*$/, {
-      message: "No spaces allowed",
-    }),
-})
-
-type ZForm = z.infer<typeof formSchema>
-
 export function CommunityCreateForm() {
   const router = useRouter()
 
-  const [isLoading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const form = useForm<ZForm>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(XFormSchema),
     defaultValues: {
       name: "",
     },
   })
 
-  function onSubmit(values: ZForm) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    setLoading(true)
-    console.log(values)
+  function onSubmit({ name }: ZForm) {
+    startTransition(async () => {
+      try {
+        const res = await createCommunityAction({ name })
+        form.reset()
+        toast({
+          title: "Success",
+          description: (
+            <span>
+              Community <span className="font-bold">x/{res.name}</span>{" "}
+              created!!
+            </span>
+          ),
+        })
+        router.push(`/x/${res.name}`)
+      } catch (e) {
+        toast({
+          title: "Error",
+          description: e instanceof Error ? e.message : "Something went wrong",
+          variant: "destructive",
+        })
+      }
+    })
   }
+
   return (
     <Form {...form}>
       <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
@@ -81,13 +87,13 @@ export function CommunityCreateForm() {
           <Button
             variant="outline"
             type="reset"
-            disabled={isLoading}
+            disabled={isPending}
             onClick={() => router.back()}
           >
             Cancel
           </Button>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? (
+          <Button type="submit" disabled={isPending}>
+            {isPending ? (
               <Icons.loading className="h-4 w-4 animate-spin" />
             ) : (
               "Submit"

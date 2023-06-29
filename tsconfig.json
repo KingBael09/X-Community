@@ -27,7 +27,8 @@
       "@/*": ["./src/*"],
       "@/global-style": ["./src/styles/globals.css"],
       "@/ui/*": ["./src/components/ui/*"],
-      "@/util/*": ["./src/components/util/*"]
+      "@/util/*": ["./src/components/util/*"],
+      "@/actions/*": ["./src/app/_actions/*"]
     }
   },
   "include": [
@@ -37,7 +38,8 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "types/next-auth.d.ts"
   ],
   "exclude": ["node_modules"]
 }

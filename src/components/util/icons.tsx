@@ -1,5 +1,7 @@
 import {
   HomeIcon,
+  Image,
+  Link2,
   Loader2,
   MessageSquare,
   Moon,
@@ -22,6 +24,8 @@ export const Icons = {
   close: X,
   loading: Loader2,
   home: HomeIcon,
+  image: Image,
+  link: Link2,
   google: (props: LucideProps) => (
     <svg {...props} viewBox="0 0 24 24">
       <path

@@ -1,17 +1,14 @@
 import Link from "next/link"
+import { buttonVariants } from "@/ui/button"
 import { Icons } from "@/util/icons"
-import { getServerSession } from "next-auth"
 
 import { siteConfig } from "@/config/site"
-import { authOptions } from "@/lib/auth"
 import { getAuthSession } from "@/lib/session"
-import { buttonVariants } from "@/components/ui/button"
+import { ThemeToggle } from "@/components/toggleTheme"
 import { UserAccountNav } from "@/components/userAccountNav"
 
-import { ThemeToggle } from "../../toggleTheme"
-
 export default async function Navbar() {
-  const session = await getAuthSession()
+  const user = await getAuthSession()
   return (
     <div className="fixed inset-x-0 top-0 z-[10] h-fit border-b border-accent bg-background py-2">
       <div className="container mx-auto flex h-full max-w-7xl items-center justify-between gap-2">
@@ -23,8 +20,8 @@ export default async function Navbar() {
         </Link>
         <div className="flex items-center gap-2">
           <ThemeToggle className="rounded-full p-2" />
-          {session ? (
-            <UserAccountNav user={session} />
+          {user ? (
+            <UserAccountNav user={user} />
           ) : (
             <Link href="/login" className={buttonVariants()}>
               Sign In

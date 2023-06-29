@@ -21,11 +21,10 @@ export const metadata = {
   ],
 }
 
-interface RoootLayoutProps extends LayoutProps {
+interface RoolLayoutProps extends LayoutProps {
   authModel?: React.ReactNode
 }
-
-export default function RootLayout({ children, authModel }: RoootLayoutProps) {
+export default function RootLayout({ children, authModel }: RoolLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body

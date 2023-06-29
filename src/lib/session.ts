@@ -4,5 +4,10 @@ import { authOptions } from "./auth"
 
 export async function getAuthSession() {
   const session = await getServerSession(authOptions)
-  return session?.user
+
+  if (!session?.user) {
+    return null
+  }
+
+  return session.user
 }
