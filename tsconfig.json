@@ -27,6 +27,8 @@
       "@/*": ["./src/*"],
       "@/global-style": ["./src/styles/globals.css"],
       "@/ui/*": ["./src/components/ui/*"],
+      "@/forms/*": ["./src/components/forms/*"],
+      "@/common/*": ["./src/components/common/*"],
       "@/util/*": ["./src/components/util/*"],
       "@/actions/*": ["./src/app/_actions/*"]
     }

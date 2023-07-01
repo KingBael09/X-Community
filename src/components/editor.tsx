@@ -1,25 +1,33 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
-import dynamic from "next/dynamic"
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import "@/styles/editor.css"
+
+import { useCallback, useEffect, useRef, useState, useTransition } from "react"
+import type { Route } from "next"
+import { usePathname, useRouter } from "next/navigation"
+import { createPostAction } from "@/actions/post"
+import { Button } from "@/ui/button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/ui/form"
+import { Icons } from "@/util/icons"
 import type EditorJS from "@editorjs/editorjs"
-import type { API, ToolConstructable, ToolSettings } from "@editorjs/editorjs"
+import type { ToolConstructable, ToolSettings } from "@editorjs/editorjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import TextareaAutosize from "react-textarea-autosize"
 
-import "@/styles/editor.css"
-
 import { uploadFiles } from "@/lib/upload"
+import { PostSchema, type ZPost } from "@/lib/validators/post"
 import { toast } from "@/hooks/use-toast"
-
-import { PostSchema, type ZPost } from "../lib/validators/post"
 
 interface EditorProps {
   communityId: string
 }
 
 export default function Editor({ communityId }: EditorProps) {
+  const router = useRouter()
+  const pathname = usePathname()
+  const [isPending, startTransition] = useTransition()
   const [isMounted, setIsMounted] = useState(false)
 
   const form = useForm<ZPost>({
@@ -31,14 +39,8 @@ export default function Editor({ communityId }: EditorProps) {
     },
   })
 
-  // Checking if editor is mountable on client
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsMounted(true)
-    }
-  }, [])
-
   const ref = useRef<EditorJS>()
+  const _titleRef = useRef<HTMLTextAreaElement | null>(null) //our ref for title
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default
@@ -102,39 +104,119 @@ export default function Editor({ communityId }: EditorProps) {
     }
   }, [])
 
+  // Checking if editor is mountable on client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMounted(true)
+    }
+  }, [])
+
   useEffect(() => {
     const init = async () => {
       await initializeEditor()
+
+      setTimeout(() => {
+        _titleRef.current?.focus()
+      }, 0)
+      // this moves the focusing action to the end of the call stack
     }
     if (isMounted) {
       void init()
 
-      return () => {}
+      return () => {
+        // cleanup
+        ref.current?.destroy()
+        ref.current = undefined
+      }
     }
   }, [isMounted, initializeEditor])
 
+  async function onSubmit({ title, communityId }: ZPost) {
+    const content = await ref.current?.save()
+    const payload: ZPost = {
+      title,
+      content,
+      communityId,
+    }
+
+    startTransition(async () => {
+      try {
+        await createPostAction(payload)
+        toast({
+          title: "Success",
+          description: "Your post has been published",
+        })
+        // Basically /mycommunity/submit -> /mycommunity
+        const newPathname = pathname.split("/").slice(0, -1).join("/")
+        router.push(newPathname as Route)
+        router.refresh()
+      } catch (e) {
+        if (e instanceof Error) {
+          toast({
+            title: "Error",
+            description: e.message,
+            variant: "destructive",
+          })
+        } else {
+          toast({
+            title: "Error",
+            description: "Something went wrong",
+            variant: "destructive",
+          })
+        }
+      }
+    })
+  }
+
   return (
-    <div className="w-full rounded-lg border border-accent bg-background p-4 md:p-6">
-      <form
-        id="subreddit-post-form"
-        className="w-full"
-        // onSubmit={handleSubmit(onSubmit)}
-      >
-        <div className="prose prose-stone w-full max-w-full dark:prose-invert">
-          <TextareaAutosize
-            placeholder="Title"
-            className="w-full resize-none appearance-none overflow-hidden bg-transparent text-4xl font-bold focus:outline-none md:text-5xl"
-          />
-          <div id="editor" className="min-h-[500px]" />
-          <p className="text-sm text-gray-500">
+    <div className="w-full rounded-lg bg-background p-4 md:p-6">
+      {/* <div className="w-full rounded-lg border border-accent bg-background p-4 md:p-6"> */}
+      <Form {...form}>
+        <form
+          className="w-full"
+          onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+        >
+          <div className="prose prose-stone w-full max-w-full dark:prose-invert">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => {
+                const { ref, ...rest } = field //removing the hook-form's ref to add our own
+                return (
+                  <FormItem>
+                    <FormControl>
+                      <TextareaAutosize
+                        ref={(e) => {
+                          _titleRef.current = e
+                        }}
+                        placeholder="Title"
+                        className="w-full resize-none appearance-none overflow-hidden bg-transparent text-4xl font-bold focus:outline-none md:text-5xl"
+                        {...rest}
+                      />
+                    </FormControl>
+                    <FormMessage className="my-2" />
+                  </FormItem>
+                )
+              }}
+            />
+          </div>
+          <div id="editor" className="min-h-[400px]" />
+          <p className="text-sm text-muted-foreground">
             Use{" "}
             <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
               Tab
             </kbd>{" "}
             to open the command menu.
           </p>
-        </div>
-      </form>
+          <Button type="submit" disabled={isPending} className="mt-7 w-full">
+            {isPending ? (
+              <Icons.loading className="h-4 w-4 animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
+        </form>
+      </Form>
     </div>
   )
 }

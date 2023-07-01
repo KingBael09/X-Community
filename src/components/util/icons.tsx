@@ -1,4 +1,7 @@
 import {
+  ArrowBigDown,
+  ArrowBigUp,
+  ChevronLeft,
   HomeIcon,
   Image,
   Link2,
@@ -26,6 +29,10 @@ export const Icons = {
   home: HomeIcon,
   image: Image,
   link: Link2,
+  comment: MessageSquare,
+  up: ArrowBigUp,
+  down: ArrowBigDown,
+  back: ChevronLeft,
   google: (props: LucideProps) => (
     <svg {...props} viewBox="0 0 24 24">
       <path

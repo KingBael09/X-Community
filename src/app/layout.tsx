@@ -1,16 +1,15 @@
 import "@/global-style"
 
+import Navbar from "@/common/navbar"
+import Providers from "@/common/providers/"
 import type { LayoutProps } from "@/types"
 import { Analytics } from "@/util/analytics"
-import { ThemeProvider } from "@/util/providers"
 import { TailwindIndicator } from "@/util/tailwind-indicator"
+import { Toaster } from "@/util/toaster"
 
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import Navbar from "@/components/common/navbar"
-
-import { Toaster } from "../components/util/toaster"
 
 export const metadata = {
   title: siteConfig.name,
@@ -22,8 +21,9 @@ export const metadata = {
 }
 
 interface RoolLayoutProps extends LayoutProps {
-  authModel?: React.ReactNode
+  authModel: React.ReactNode
 }
+
 export default function RootLayout({ children, authModel }: RoolLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -33,16 +33,16 @@ export default function RootLayout({ children, authModel }: RoolLayoutProps) {
           fontSans.variable
         )}
       >
-        <Analytics />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <Providers>
+          <Analytics />
           <Navbar />
           {authModel}
           <div className="container mx-auto h-full max-w-7xl pt-12">
             {children}
           </div>
           <Toaster />
-        </ThemeProvider>
-        <TailwindIndicator />
+          <TailwindIndicator />
+        </Providers>
       </body>
     </html>
   )

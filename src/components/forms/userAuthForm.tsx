@@ -2,12 +2,11 @@
 
 import { useState } from "react"
 import { Button } from "@/ui/button"
+import { Icons } from "@/util/icons"
 import { signIn } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
-
-import { Icons } from "../util/icons"
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
 

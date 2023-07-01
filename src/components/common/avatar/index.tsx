@@ -1,9 +1,8 @@
 import Image from "next/image"
 import { Avatar, AvatarFallback } from "@/ui/avatar"
+import { Icons } from "@/util/icons"
 import type { AvatarProps } from "@radix-ui/react-avatar"
 import type { User } from "next-auth"
-
-import { Icons } from "../../util/icons"
 
 export interface UserAvatarProps extends AvatarProps {
   user: Pick<User, "name" | "image">
@@ -15,6 +14,7 @@ export function UserAvatar({ user, ...props }: UserAvatarProps) {
         <div className="relative aspect-square h-full w-full">
           <Image
             fill
+            sizes="10vw"
             src={user.image}
             alt="profile picture"
             referrerPolicy="no-referrer"

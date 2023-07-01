@@ -1,5 +1,5 @@
-import SignIn from "@/components/common/auth"
-import InterceptModal from "@/components/common/intercept-modal"
+import SignIn from "@/common/auth"
+import InterceptModal from "@/common/intercept-modal"
 
 export default function Page() {
   return (

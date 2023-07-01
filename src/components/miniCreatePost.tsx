@@ -2,12 +2,11 @@
 
 import type { Route } from "next"
 import { usePathname, useRouter } from "next/navigation"
+import { UserAvatar } from "@/common/avatar/index"
+import { Button } from "@/ui/button"
 import { Input } from "@/ui/input"
+import { Icons } from "@/util/icons"
 import type { User } from "next-auth"
-
-import { UserAvatar } from "./common/avatar/index"
-import { Button } from "./ui/button"
-import { Icons } from "./util/icons"
 
 interface MiniCreatePostProps {
   user: User | null

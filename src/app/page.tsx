@@ -1,9 +1,8 @@
 import Link from "next/link"
+import { buttonVariants } from "@/ui/button"
+import { Icons } from "@/util/icons"
 
 import { siteConfig } from "@/config/site"
-import { buttonVariants } from "@/components/ui/button"
-
-import { Icons } from "../components/util/icons"
 
 export default function Home() {
   return (

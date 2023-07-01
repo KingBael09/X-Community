@@ -26,9 +26,16 @@ const formatDistanceLocale = {
   almostXYears: "{{count}}y",
 }
 
-// TODO: fix options type
+interface Options {
+  addSuffix?: boolean
+  comparison?: number
+}
 
-function formatDistance(token: string, count: number, options?: any): string {
+function formatDistance(
+  token: string,
+  count: number,
+  options?: Options
+): string {
   options = options || {}
 
   const result = formatDistanceLocale[
@@ -36,7 +43,7 @@ function formatDistance(token: string, count: number, options?: any): string {
   ].replace("{{count}}", count.toString())
 
   if (options.addSuffix) {
-    if (options.comparison > 0) {
+    if (options.comparison! > 0) {
       return "in " + result
     } else {
       if (result === "just now") return result

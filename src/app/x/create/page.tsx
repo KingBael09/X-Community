@@ -1,5 +1,5 @@
-import { Separator } from "@/components/ui/separator"
-import { CommunityCreateForm } from "@/components/forms/XForm"
+import { CommunityCreateForm } from "@/forms/XForm"
+import { Separator } from "@/ui/separator"
 
 export default function Page() {
   return (

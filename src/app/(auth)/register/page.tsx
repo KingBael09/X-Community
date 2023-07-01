@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import SignUp from "@/common/auth"
 import { buttonVariants } from "@/ui/button"
 import { ChevronLeft } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import SignUp from "@/components/common/auth"
 
 export const metadata: Metadata = {
   title: "Sign Up",

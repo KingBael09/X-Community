@@ -7,11 +7,10 @@ import {
   unSubscribeCommunityAction,
   type SubscribeAction,
 } from "@/actions/community"
+import { Button } from "@/ui/button"
+import { Icons } from "@/util/icons"
 
 import { toast } from "@/hooks/use-toast"
-import { Button } from "@/components/ui/button"
-
-import { Icons } from "./util/icons"
 
 interface SubscribeLeaveToggleProps extends SubscribeAction {
   isSubscribed: boolean

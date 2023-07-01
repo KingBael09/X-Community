@@ -1,8 +1,8 @@
 import Link from "next/link"
+import { UserAuthForm } from "@/forms/userAuthForm"
 import { Icons } from "@/util/icons"
 
 import { siteConfig } from "@/config/site"
-import { UserAuthForm } from "@/components/forms/userAuthForm"
 
 interface TemplateProps {
   name: "login" | "register"

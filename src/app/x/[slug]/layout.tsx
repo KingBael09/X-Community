@@ -1,11 +1,11 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { LayoutProps } from "@/types"
+import { buttonVariants } from "@/ui/button"
 import { format } from "date-fns"
 
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
-import { buttonVariants } from "@/components/ui/button"
 import { SubscribeLeaveToggle } from "@/components/subscribeLeaveToggle"
 
 export interface CommunityPageProps {

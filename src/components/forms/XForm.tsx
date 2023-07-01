@@ -4,12 +4,6 @@ import { useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { createCommunityAction } from "@/actions/community"
 import { Button } from "@/ui/button"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-
-import { XFormSchema, type ZForm } from "@/lib/validators/community"
-import { toast } from "@/hooks/use-toast"
-
 import {
   Form,
   FormControl,
@@ -18,9 +12,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form"
-import { Input } from "../ui/input"
-import { Icons } from "../util/icons"
+} from "@/ui/form"
+import { Input } from "@/ui/input"
+import { Icons } from "@/util/icons"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+
+import { XFormSchema, type ZForm } from "@/lib/validators/community"
+import { toast } from "@/hooks/use-toast"
 
 export function CommunityCreateForm() {
   const router = useRouter()

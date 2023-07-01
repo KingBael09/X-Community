@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import SignIn from "@/common/auth"
 import { buttonVariants } from "@/ui/button"
-import { ChevronLeft } from "lucide-react"
+import { Icons } from "@/util/icons"
 
 import { cn } from "@/lib/utils"
-import SignIn from "@/components/common/auth"
 
 export const metadata: Metadata = {
   title: "Sign In",
@@ -19,7 +19,7 @@ export default function Page() {
           href="/"
           className={cn("self-start", buttonVariants({ variant: "ghost" }))}
         >
-          <ChevronLeft className="mr-2 h-4 w-4" />
+          <Icons.back className="mr-2 h-4 w-4" />
           Home
         </Link>
 

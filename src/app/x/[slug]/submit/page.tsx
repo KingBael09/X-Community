@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation"
 
 import { db } from "@/lib/db"
-import { Button } from "@/components/ui/button"
 import Editor from "@/components/editor"
 
 import type { CommunityPageProps } from "../layout"
@@ -28,15 +27,6 @@ export default async function Page({ params }: CommunityPageProps) {
         </div>
       </div>
       <Editor communityId={community.id} />
-      <PostForm />
-    </div>
-  )
-}
-
-function PostForm() {
-  return (
-    <div className="flex w-full justify-end">
-      <Button>Post</Button>
     </div>
   )
 }

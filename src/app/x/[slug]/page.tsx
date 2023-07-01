@@ -4,6 +4,7 @@ import { INFINITE_SCROLLING_PAGENATION_RESULTS } from "@/config"
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
 import MiniCreatePost from "@/components/miniCreatePost"
+import PostFeed, { type FeedProps } from "@/components/postFeed"
 
 import type { CommunityPageProps } from "./layout"
 
@@ -31,12 +32,19 @@ export default async function Page({ params }: CommunityPageProps) {
 
   if (!community) return notFound()
 
+  const feedProps: FeedProps = {
+    user,
+    communityName: community.name,
+    initialPosts: community.posts,
+  }
+
   return (
     <main>
-      <h1 className="h-14 text-3xl font-bold md:text-4xl">
+      <h1 className="h-14 text-3xl font-bold md:text-4xl" id="top">
         x/{community.name}
       </h1>
       <MiniCreatePost user={user} />
+      <PostFeed {...feedProps} />
     </main>
   )
 }
