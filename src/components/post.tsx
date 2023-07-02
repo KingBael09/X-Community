@@ -3,21 +3,14 @@
 import { useRef } from "react"
 import type { Route } from "next"
 import Link from "next/link"
-import type { ExtendedPost } from "@/types"
+import type { PostProps } from "@/types"
 import { buttonVariants } from "@/ui/button"
-import type { Vote } from "@prisma/client"
+import { Icons } from "@/util/icons"
 
 import { cn, formatTimeToNow } from "@/lib/utils"
 
 import EditorOutput from "./editorOutput"
 import PostVoteClient from "./postVote/postVoteClient"
-import { Icons } from "./util/icons"
-
-interface PostProps {
-  post: ExtendedPost
-  votesAmt: number
-  currentVote: Vote | undefined
-}
 
 export default function Post({ post, votesAmt, currentVote }: PostProps) {
   const pref = useRef<HTMLDivElement>(null)
@@ -41,7 +34,7 @@ export default function Post({ post, votesAmt, currentVote }: PostProps) {
                     }),
                     "p-0 underline hover:text-muted-foreground"
                   )}
-                  href={`/x/${post.community.name}/#top` as Route}
+                  href={`/x/${post.community.name}`}
                 >
                   x/{post.community.name}
                 </Link>

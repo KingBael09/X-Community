@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState, useTransition } from "react"
 import type { Route } from "next"
 import { usePathname, useRouter } from "next/navigation"
 import { createPostAction } from "@/actions/post"
+import type { EditorProps } from "@/types"
 import { Button } from "@/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/ui/form"
 import { Icons } from "@/util/icons"
@@ -19,10 +20,6 @@ import TextareaAutosize from "react-textarea-autosize"
 import { uploadFiles } from "@/lib/upload"
 import { PostSchema, type ZPost } from "@/lib/validators/post"
 import { toast } from "@/hooks/use-toast"
-
-interface EditorProps {
-  communityId: string
-}
 
 export default function Editor({ communityId }: EditorProps) {
   const router = useRouter()
@@ -151,19 +148,11 @@ export default function Editor({ communityId }: EditorProps) {
         router.push(newPathname as Route)
         router.refresh()
       } catch (e) {
-        if (e instanceof Error) {
-          toast({
-            title: "Error",
-            description: e.message,
-            variant: "destructive",
-          })
-        } else {
-          toast({
-            title: "Error",
-            description: "Something went wrong",
-            variant: "destructive",
-          })
-        }
+        toast({
+          title: "Error",
+          description: e instanceof Error ? e.message : "Something Went Wrong",
+          variant: "destructive",
+        })
       }
     })
   }

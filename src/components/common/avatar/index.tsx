@@ -1,12 +1,8 @@
 import Image from "next/image"
+import type { UserAvatarProps } from "@/types"
 import { Avatar, AvatarFallback } from "@/ui/avatar"
 import { Icons } from "@/util/icons"
-import type { AvatarProps } from "@radix-ui/react-avatar"
-import type { User } from "next-auth"
 
-export interface UserAvatarProps extends AvatarProps {
-  user: Pick<User, "name" | "image">
-}
 export function UserAvatar({ user, ...props }: UserAvatarProps) {
   return (
     <Avatar {...props}>

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { UserAvatar } from "@/common/avatar"
+import type { UserAccountNavProps } from "@/types"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
-import type { User } from "next-auth"
 import { signOut } from "next-auth/react"
 
-interface UserAccountNavProps {
-  user: Pick<User, "name" | "image" | "email">
-}
 export function UserAccountNav({ user }: UserAccountNavProps) {
   const handleSignOut = async (e: Event) => {
     e.preventDefault()

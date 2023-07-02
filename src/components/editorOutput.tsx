@@ -1,22 +1,16 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import type { EditorOutputProps } from "@/types"
 import { Icons } from "@/util/icons"
-import type { Prisma } from "@prisma/client"
 
 import { CustomCodeRenderer, CustomImageRenderer } from "./renderers"
-
-interface EditorOutputProps {
-  content: Prisma.JsonValue
-}
 
 const Output = dynamic(
   () => import("editorjs-react-renderer").then((e) => e.default),
   {
     ssr: false,
-    loading: () => (
-      <Icons.loading className="absolute right-[50%] h-4 w-4 animate-spin" />
-    ),
+    loading: () => <Icons.loading className=" h-4 w-4 animate-spin" />,
   }
 )
 

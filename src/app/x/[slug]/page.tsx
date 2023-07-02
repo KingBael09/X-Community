@@ -1,12 +1,11 @@
 import { notFound } from "next/navigation"
 import { INFINITE_SCROLLING_PAGENATION_RESULTS } from "@/config"
+import type { CommunityPageProps, FeedProps } from "@/types"
 
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
 import MiniCreatePost from "@/components/miniCreatePost"
-import PostFeed, { type FeedProps } from "@/components/postFeed"
-
-import type { CommunityPageProps } from "./layout"
+import PostFeed from "@/components/postFeed"
 
 export default async function Page({ params }: CommunityPageProps) {
   const { slug } = params
@@ -19,13 +18,16 @@ export default async function Page({ params }: CommunityPageProps) {
     },
     include: {
       posts: {
+        take: INFINITE_SCROLLING_PAGENATION_RESULTS,
+        orderBy: {
+          createdAt: "desc",
+        },
         include: {
           author: true,
           votes: true,
           comments: true,
           community: true,
         },
-        take: INFINITE_SCROLLING_PAGENATION_RESULTS,
       },
     },
   })
@@ -40,7 +42,7 @@ export default async function Page({ params }: CommunityPageProps) {
 
   return (
     <main>
-      <h1 className="h-14 text-3xl font-bold md:text-4xl" id="top">
+      <h1 className="h-14 text-3xl font-bold md:text-4xl">
         x/{community.name}
       </h1>
       <MiniCreatePost user={user} />

@@ -3,20 +3,16 @@
 import type { Route } from "next"
 import { usePathname, useRouter } from "next/navigation"
 import { UserAvatar } from "@/common/avatar/index"
+import type { MiniCreatePostProps } from "@/types"
 import { Button } from "@/ui/button"
 import { Input } from "@/ui/input"
 import { Icons } from "@/util/icons"
-import type { User } from "next-auth"
-
-interface MiniCreatePostProps {
-  user: User | null
-}
 
 export default function MiniCreatePost({ user }: MiniCreatePostProps) {
   const router = useRouter()
   const pathname = usePathname()
   return (
-    <li className="overflow-hidden rounded-md bg-background shadow">
+    <div className="overflow-hidden rounded-md bg-background shadow">
       <div className="flex h-full flex-col justify-between gap-2 px-6 py-4 md:flex-row md:gap-6">
         <div className="flex w-full items-center gap-2">
           <div className="relative">
@@ -43,6 +39,6 @@ export default function MiniCreatePost({ user }: MiniCreatePostProps) {
           </Button>
         </div>
       </div>
-    </li>
+    </div>
   )
 }

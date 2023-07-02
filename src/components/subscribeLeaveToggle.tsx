@@ -5,17 +5,12 @@ import { useRouter } from "next/navigation"
 import {
   subscribeCommunityAction,
   unSubscribeCommunityAction,
-  type SubscribeAction,
 } from "@/actions/community"
+import type { SubscribeLeaveToggleProps } from "@/types"
 import { Button } from "@/ui/button"
 import { Icons } from "@/util/icons"
 
 import { toast } from "@/hooks/use-toast"
-
-interface SubscribeLeaveToggleProps extends SubscribeAction {
-  isSubscribed: boolean
-  communityName: string
-}
 
 export function SubscribeLeaveToggle({
   communityId,

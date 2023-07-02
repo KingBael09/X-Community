@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation"
+import type { CommunityPageProps } from "@/types"
 
 import { db } from "@/lib/db"
 import Editor from "@/components/editor"
-
-import type { CommunityPageProps } from "../layout"
 
 export default async function Page({ params }: CommunityPageProps) {
   const community = await db.community.findFirst({
@@ -22,7 +21,7 @@ export default async function Page({ params }: CommunityPageProps) {
             Create Post
           </h3>
           <p className="ml-2 mt-1 truncate text-sm text-muted-foreground">
-            in r/{community.name}
+            in x/{community.name}
           </p>
         </div>
       </div>

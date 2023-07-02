@@ -1,24 +1,18 @@
 "use client"
 
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { INFINITE_SCROLLING_PAGENATION_RESULTS } from "@/config"
-import type { ExtendedPost } from "@/types"
+import type { ExtendedPost, FeedProps } from "@/types"
 import { useIntersection } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import type { User } from "next-auth"
 
 import Post from "./post"
-
-export interface FeedProps {
-  initialPosts: ExtendedPost[]
-  communityName?: string
-  user: User | null
-}
 
 export default function PostFeed({
   initialPosts,
   communityName,
   user,
+  isMainFeed = false,
 }: FeedProps) {
   const lastPostRef = useRef<HTMLElement>(null)
   const { ref, entry } = useIntersection({
@@ -36,7 +30,7 @@ export default function PostFeed({
 
       const req = await fetch(query)
       const res = await req.json()
-      //   Try server action here
+      // TODO:  Try server action here
       return res as ExtendedPost[]
     },
     {
@@ -48,8 +42,24 @@ export default function PostFeed({
     }
   )
 
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      void fetchNextPage()
+    }
+  }, [entry, fetchNextPage])
+
   // fattening array to join nextPage array to current array
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts
+
+  if (user && posts.length === 0) {
+    return (
+      <div className="flex items-center justify-center rounded-lg border border-accent/50 px-1 py-4 text-center leading-6 text-muted-foreground [text-wrap:balance]">
+        {isMainFeed
+          ? "Subscribe to some communities to view to see them of feed!"
+          : "No Posts Yet!"}
+      </div>
+    )
+  }
 
   return (
     <ul className="col-span-2 flex flex-col space-y-6">
@@ -63,7 +73,11 @@ export default function PostFeed({
         const currentVote = post.votes.find((vote) => vote.userId === user?.id)
 
         return (
-          <li key={post.id} ref={i === posts.length - 1 ? ref : undefined}>
+          <li
+            key={post.id}
+            ref={i === posts.length - 1 ? ref : undefined}
+            data-attr={i === posts.length - 1 ? "ref_true" : "ref_false"}
+          >
             <Post post={post} votesAmt={votesAmt} currentVote={currentVote} />
           </li>
         )

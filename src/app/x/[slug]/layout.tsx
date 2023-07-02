@@ -1,18 +1,12 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import type { LayoutProps } from "@/types"
+import type { CommunityPageProps, LayoutProps } from "@/types"
 import { buttonVariants } from "@/ui/button"
 import { format } from "date-fns"
 
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
 import { SubscribeLeaveToggle } from "@/components/subscribeLeaveToggle"
-
-export interface CommunityPageProps {
-  params: {
-    slug: string
-  }
-}
 
 export default async function Layout({
   children,

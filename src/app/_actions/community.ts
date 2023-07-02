@@ -1,5 +1,7 @@
 "use server"
 
+import type { SubscribeAction } from "@/types"
+
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
 import type { ZForm } from "@/lib/validators/community"
@@ -39,10 +41,6 @@ export async function createCommunityAction(data: ZForm) {
   })
 
   return { id: newCommunity.id, name: newCommunity.name }
-}
-
-export interface SubscribeAction {
-  communityId: string
 }
 
 export async function subscribeCommunityAction({
