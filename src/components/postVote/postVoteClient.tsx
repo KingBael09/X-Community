@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState, useTransition } from "react"
+import { votePostAction } from "@/actions/post"
 import type { PostVoteProps } from "@/types"
 import { Button } from "@/ui/button"
 import { Icons } from "@/util/icons"
@@ -9,7 +10,6 @@ import type { VoteType } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
-import { votePostAction } from "@/app/_actions/post"
 
 export default function PostVoteClient({
   initialVote,

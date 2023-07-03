@@ -2,7 +2,7 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { commentPostAction } from "@/actions/post"
+import { commentPostAction } from "@/actions/comment"
 import { Button } from "@/ui/button"
 import {
   Form,
@@ -13,13 +13,13 @@ import {
   FormMessage,
 } from "@/ui/form"
 import { Textarea } from "@/ui/textarea"
+import { Icons } from "@/util/icons"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
-import { Icons } from "@/components/util/icons"
 
 const CommentSchema = z.object({
   postId: z.string(),

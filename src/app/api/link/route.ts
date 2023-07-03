@@ -9,7 +9,7 @@ export async function GET(req: Request) {
     method: "GET",
   })
   const data = await res.text()
-  // const { data } = await axios.get<string>(href)
+
   const titleMatch = data.match(/<title>(.*?)<\/title>/)
   const title = titleMatch ? titleMatch[1] : ""
 

@@ -9,8 +9,6 @@ interface CodeRendererProps {
 }
 
 export function CustomCodeRenderer({ data }: CodeRendererProps) {
-  // data
-
   return (
     <pre className="rounded-md bg-muted p-4">
       <code className="text-sm text-accent-foreground">{data.code}</code>

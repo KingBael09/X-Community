@@ -3,13 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { Separator } from "@/ui/separator"
-import { type Community, type Prisma } from "@prisma/client"
-import { useQuery } from "@tanstack/react-query"
-import debounce from "lodash.debounce"
-
-import { useOnClickOutside } from "@/hooks/use-on-click-outside"
-
 import {
   Command,
   CommandEmpty,
@@ -17,8 +10,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "./ui/command"
-import { Icons } from "./util/icons"
+} from "@/ui/command"
+import { Icons } from "@/util/icons"
+import type { Community, Prisma } from "@prisma/client"
+import { useQuery } from "@tanstack/react-query"
+import debounce from "lodash.debounce"
+
+import { useOnClickOutside } from "@/hooks/use-on-click-outside"
 
 type CastType = Community & {
   _count: Prisma.CommunityCountOutputType
@@ -70,6 +68,7 @@ export function SearchBar() {
       className="relative max-w-lg overflow-visible rounded-lg border"
     >
       <CommandInput
+        isLoading={isFetching}
         value={input}
         onValueChange={(text) => {
           setInput(text)
@@ -83,7 +82,7 @@ export function SearchBar() {
           {isFetched && <CommandEmpty>No results found.</CommandEmpty>}
           {(queryResults?.length ?? 0) > 0 ? (
             <CommandGroup heading="Communities">
-              {queryResults?.map((community, i) => (
+              {queryResults?.map((community) => (
                 <CommandItem
                   onSelect={(e) => {
                     router.push(`/x/${e}`)

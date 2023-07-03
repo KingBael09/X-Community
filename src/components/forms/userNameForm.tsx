@@ -14,12 +14,12 @@ import {
 } from "@/ui/card"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/ui/form"
 import { Input } from "@/ui/input"
+import { Icons } from "@/util/icons"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 import { UserNameFormSchema, type ZUser } from "@/lib/validators/user"
 import { toast } from "@/hooks/use-toast"
-import { Icons } from "@/components/util/icons"
 
 interface UserNameFormProps {
   username?: string | null

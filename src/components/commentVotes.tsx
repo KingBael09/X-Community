@@ -1,15 +1,14 @@
 "use client"
 
 import { useEffect, useState, useTransition } from "react"
-import { voteCommentAction } from "@/actions/post"
+import { voteCommentAction } from "@/actions/comment"
 import { Button } from "@/ui/button"
+import { Icons } from "@/util/icons"
 import { usePrevious } from "@mantine/hooks"
 import type { CommentVote, VoteType } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
-
-import { Icons } from "./util/icons"
 
 export interface CommentVoteProps {
   commentId: string

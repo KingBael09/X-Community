@@ -2,13 +2,13 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import SignUp from "@/common/auth"
 import { buttonVariants } from "@/ui/button"
-import { ChevronLeft } from "lucide-react"
+import { Icons } from "@/util/icons"
 
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Sign Up",
-  description: "Create an accound?",
+  description: "Create an account?",
 }
 
 export default function Page() {
@@ -19,7 +19,7 @@ export default function Page() {
           href="/"
           className={cn("self-start", buttonVariants({ variant: "ghost" }))}
         >
-          <ChevronLeft className="mr-2 h-4 w-4" />
+          <Icons.back className="mr-2 h-4 w-4" />
           Home
         </Link>
 

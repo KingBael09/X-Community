@@ -1,16 +1,16 @@
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
+import { buttonVariants } from "@/ui/button"
+import { Icons } from "@/util/icons"
 import { type Post, type User, type Vote } from "@prisma/client"
 
-import { type CachedPost } from "@/types/redis"
+import type { CachedPost } from "@/types/redis"
 import { db } from "@/lib/db"
 import { redis } from "@/lib/redis"
 import { formatTimeToNow } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
 import { CommentsSection } from "@/components/commentsSection"
 import EditorOutput from "@/components/editorOutput"
 import { PostVoteServer } from "@/components/postVote/postVoteServer"
-import { Icons } from "@/components/util/icons"
 
 interface PostPageProps {
   params: {

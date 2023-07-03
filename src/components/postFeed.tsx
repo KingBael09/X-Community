@@ -3,11 +3,11 @@
 import { useEffect, useRef } from "react"
 import { INFINITE_SCROLLING_PAGENATION_RESULTS } from "@/config"
 import type { ExtendedPost, FeedProps } from "@/types"
+import { Icons } from "@/util/icons"
 import { useIntersection } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import Post from "./post"
-import { Icons } from "./util/icons"
 
 export default function PostFeed({
   initialPosts,

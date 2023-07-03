@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
   url: "https://localhost:3000",
   ogImage: "https://localhost:3000/og.jpg",
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/taxonomy",
+    twitter: "https://twitter.com/_singh_jayesh",
+    github: "https://github.com/KingBael09",
   },
 }

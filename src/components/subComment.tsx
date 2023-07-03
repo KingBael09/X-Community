@@ -3,6 +3,8 @@
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { UserAvatar } from "@/common/avatar"
+import { Button } from "@/ui/button"
+import { Icons } from "@/util/icons"
 import type { Comment, CommentVote, User } from "@prisma/client"
 import { type User as AuthUser } from "next-auth"
 
@@ -10,8 +12,6 @@ import { formatTimeToNow } from "@/lib/utils"
 
 import { CommentVotes } from "./commentVotes"
 import { CreateComment } from "./createComment"
-import { Button } from "./ui/button"
-import { Icons } from "./util/icons"
 
 interface SubCommentProps {
   postId: string
