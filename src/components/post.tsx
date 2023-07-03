@@ -1,7 +1,6 @@
 "use client"
 
 import { useRef } from "react"
-import type { Route } from "next"
 import Link from "next/link"
 import type { PostProps } from "@/types"
 import { buttonVariants } from "@/ui/button"
@@ -42,7 +41,7 @@ export default function Post({ post, votesAmt, currentVote }: PostProps) {
               </>
             )}
             {/* TODO: Profile pages maybe? */}
-            <span>posted by {post.author.name}</span>{" "}
+            <span>posted by u/{post.author.username}</span>{" "}
             {formatTimeToNow(new Date(post.createdAt))}
           </div>
           <Link

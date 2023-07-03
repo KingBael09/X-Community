@@ -37,6 +37,10 @@ export function SubComment({
     setIsReplying(!isReplying)
   }
 
+  const handleClose = () => {
+    setIsReplying(false)
+  }
+
   return (
     <div ref={commentRef} className="flex flex-col">
       <div className="flex items-center">
@@ -81,6 +85,7 @@ export function SubComment({
             isSubComment
             postId={postId}
             replyToId={comment.replyToId ?? comment.id}
+            closeAction={handleClose}
           />
         </div>
       )}

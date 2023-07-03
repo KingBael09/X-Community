@@ -4,6 +4,7 @@ import { Icons } from "@/util/icons"
 
 import { siteConfig } from "@/config/site"
 import { getAuthSession } from "@/lib/session"
+import { SearchBar } from "@/components/searchBar"
 import { ThemeToggle } from "@/components/toggleTheme"
 import { UserAccountNav } from "@/components/userAccountNav"
 
@@ -18,6 +19,7 @@ export default async function Navbar() {
             {siteConfig.name}
           </span>
         </Link>
+        <SearchBar />
         <div className="flex items-center gap-2">
           <ThemeToggle className="rounded-full p-2" />
           {user ? (

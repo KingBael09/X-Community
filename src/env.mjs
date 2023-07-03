@@ -10,7 +10,7 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "test", "production"]),
     DATABASE_URL: z.string().min(1),
     NEXTAUTH_SECRET: z.string().min(1),
-    NEXTAUTH_URL: z.string().min(1),
+    NEXTAUTH_URL: z.string().optional(),
     REDIS_URL: z.string().min(1),
     REDIS_SECRET: z.string().min(1),
     GOOGLE_CLIENT_ID: z.string().min(1),

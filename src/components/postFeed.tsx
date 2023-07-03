@@ -7,6 +7,7 @@ import { useIntersection } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import Post from "./post"
+import { Icons } from "./util/icons"
 
 export default function PostFeed({
   initialPosts,
@@ -29,9 +30,9 @@ export default function PostFeed({
         }` + (!!communityName ? `&communityName=${communityName}` : "")
 
       const req = await fetch(query)
-      const res = await req.json()
+      const res = (await req.json()) as ExtendedPost[]
       // TODO:  Try server action here
-      return res as ExtendedPost[]
+      return res
     },
     {
       getNextPageParam: (_, pages) => pages.length + 1,
@@ -82,6 +83,11 @@ export default function PostFeed({
           </li>
         )
       })}
+      {isFetchingNextPage && (
+        <li className="flex justify-center">
+          <Icons.loading className="h-6 w-6 animate-spin" />
+        </li>
+      )}
     </ul>
   )
 }

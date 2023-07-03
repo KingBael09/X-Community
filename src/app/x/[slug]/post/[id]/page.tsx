@@ -18,14 +18,19 @@ interface PostPageProps {
   }
 }
 
+export const dynamic = "force-dynamic"
+export const fetchCache = "force-no-store"
+
 type CustomPost = (Post & { votes: Vote[]; author: User }) | null
 
 export default async function Page({ params }: PostPageProps) {
+  // TODO : Enable Caching later
+
   // check for if the post is cached
   const cachedPost = (await redis.hgetall(
     `post:${params.postId}`
   )) as unknown as CachedPost
-
+  // const cachedPost: CachedPost = null
   let post: CustomPost = null
 
   if (!cachedPost) {

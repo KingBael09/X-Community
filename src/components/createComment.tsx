@@ -2,25 +2,24 @@
 
 import { useTransition } from "react"
 import { useRouter } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-
-import { toast } from "@/hooks/use-toast"
-import { commentPostAction } from "@/app/_actions/post"
-
-import { Button } from "./ui/button"
+import { commentPostAction } from "@/actions/post"
+import { Button } from "@/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form"
-import { Textarea } from "./ui/textarea"
-import { Icons } from "./util/icons"
+} from "@/ui/form"
+import { Textarea } from "@/ui/textarea"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { cn } from "@/lib/utils"
+import { toast } from "@/hooks/use-toast"
+import { Icons } from "@/components/util/icons"
 
 const CommentSchema = z.object({
   postId: z.string(),
@@ -36,12 +35,14 @@ interface CreateCommentProps {
   postId: string
   replyToId?: string
   isSubComment?: boolean
+  closeAction?: () => void
 }
 
 export function CreateComment({
   postId,
   replyToId,
   isSubComment = false,
+  closeAction,
 }: CreateCommentProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -58,9 +59,12 @@ export function CreateComment({
   function onSubmit(values: ZComment) {
     startTransition(async () => {
       try {
-        await commentPostAction(values)
+        const res = await commentPostAction(values)
         form.reset()
         router.refresh()
+        if (closeAction && res.message) {
+          closeAction()
+        }
         toast({
           title: "Success",
           description: "Comment posted successfully",
@@ -96,10 +100,20 @@ export function CreateComment({
               </FormItem>
             )}
           />
-          <div className=" mt-4 flex w-full">
+          <div className="mt-4 flex w-full gap-2">
+            {isSubComment && (
+              <Button
+                type="reset"
+                className="w-full md:ml-auto md:w-fit"
+                onClick={closeAction}
+                disabled={isPending}
+              >
+                Cancel
+              </Button>
+            )}
             <Button
               type="submit"
-              className="w-full md:ml-auto md:w-fit"
+              className={cn(isSubComment ? "w-full md:w-fit" : "w-full")}
               disabled={isPending}
             >
               {isPending ? (
