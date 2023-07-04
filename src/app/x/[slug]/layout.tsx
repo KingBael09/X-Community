@@ -57,9 +57,9 @@ export default async function Layout({
     <div className="mx-auto h-full max-w-7xl pt-12 sm:container">
       <div>
         {/* Button to take us back */}
-        <div className="grid grid-cols-1 gap-y-4 py-6 md:grid-cols-3 md:gap-x-4">
+        <div className="relative grid grid-cols-1 gap-y-4 py-6 md:grid-cols-3 md:gap-x-4">
           <div className="col-span-2 flex flex-col space-y-6">{children}</div>
-          <div className="order-first hidden h-fit overflow-hidden rounded-lg border border-accent md:order-last md:block">
+          <div className="order-first hidden h-fit overflow-hidden rounded-lg border border-accent md:sticky md:top-20 md:order-last md:block">
             <div className="px-6 py-4">
               <p className="py-3 font-semibold">About x/{community.name}</p>
             </div>

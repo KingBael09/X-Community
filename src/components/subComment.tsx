@@ -58,40 +58,30 @@ export function SubComment({
         />
         <div className="ml-2 flex items-center gap-x-2">
           <p className="text-sm font-medium ">u/{comment.author.username}</p>
-          <p className="max-h-40 truncate text-xs text-muted">
+          <p className="max-h-40 truncate text-xs text-muted-foreground">
             {formatTimeToNow(new Date(comment.createdAt))}
           </p>
         </div>
       </div>
-      <p className="mt-2 text-sm">{comment.text}</p>
-      <div className="mt-1 flex items-center gap-2">
+      <p className="mt-2 text-sm ">{comment.text}</p>
+      <div className="my-1 flex items-center gap-2">
         <CommentVotes
           commentId={comment.id}
           initialVoteAmt={votesAmt}
           initialVote={currentVote}
         />
         <Button variant="ghost" size="sm" onClick={handleReply}>
-          {isReplying ? (
-            <>
-              <Icons.close className="mr-1.5 h-4 w-4" />
-              Close
-            </>
-          ) : (
-            <>
-              <Icons.comment className="mr-1.5 h-4 w-4" />
-              Reply
-            </>
-          )}
+          <Icons.comment className="mr-1.5 h-4 w-4" />
+          Reply
         </Button>
       </div>
       {isReplying && (
-        <div className="mt-2 w-full">
+        <div className="mt-2 w-full pr-1">
           <CreateComment
             isSubComment
             postId={postId}
-            replyToId={comment.replyToId ?? comment.id}
+            replyToId={comment.id}
             closeAction={handleClose}
-            defaultInput={`@${comment.author.username as string} `}
           />
         </div>
       )}

@@ -4,6 +4,7 @@ import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
 
 import { CreateComment } from "./createComment"
+import { NestedComments } from "./nestedComments"
 import { SubComment } from "./subComment"
 
 interface CommentsSectionProps {
@@ -16,18 +17,19 @@ export async function CommentsSection({ postId }: CommentsSectionProps) {
   const comments = await db.comment.findMany({
     where: {
       postId: postId,
-      replyToId: null, // only fetch top-level comments
+      // replyToId: null, // only fetch top-level comments
     },
     include: {
       author: true,
       votes: true,
-      replies: {
-        // first level replies
-        include: {
-          author: true,
-          votes: true,
-        },
-      },
+      replies: true,
+      // replies: {
+      //   // first level replies
+      //   include: {
+      //     author: true,
+      //     votes: true,
+      //   },
+      // },
     },
   })
 
@@ -52,7 +54,10 @@ export async function CommentsSection({ postId }: CommentsSectionProps) {
             )
 
             return (
-              <div key={topLevelComment.id} className="flex flex-col">
+              <div
+                key={topLevelComment.id}
+                className="flex flex-col overflow-y-auto"
+              >
                 <div className="mb-2">
                   <SubComment
                     postId={postId}
@@ -61,35 +66,13 @@ export async function CommentsSection({ postId }: CommentsSectionProps) {
                     currentVote={currentTopLevelCommentVote}
                     user={user}
                   />
+                  <NestedComments
+                    comments={comments}
+                    parentId={topLevelComment.id}
+                    postId={postId}
+                    user={user}
+                  />
                 </div>
-                {/* sort by likes */}
-                {topLevelComment.replies
-                  .sort((a, b) => b.votes.length - a.votes.length)
-                  .map((reply) => {
-                    const replyVotesAmt = reply.votes.reduce((acc, vote) => {
-                      if (vote.type === "UP") return acc + 1
-                      if (vote.type === "DOWN") return acc - 1
-                      return acc
-                    }, 0)
-                    const currentReplyVote = reply.votes.find(
-                      (vote) => vote.userId === user?.id
-                    )
-
-                    return (
-                      <div
-                        key={reply.id}
-                        className="ml-2  border-l-2 border-accent py-2 pl-4"
-                      >
-                        <SubComment
-                          user={user}
-                          postId={postId}
-                          comment={reply}
-                          votesAmt={replyVotesAmt}
-                          currentVote={currentReplyVote}
-                        />
-                      </div>
-                    )
-                  })}
               </div>
             )
           })}
