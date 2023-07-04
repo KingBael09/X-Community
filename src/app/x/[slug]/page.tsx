@@ -12,6 +12,15 @@ export default async function Page({ params }: CommunityPageProps) {
 
   const user = await getAuthSession()
 
+  const limit =
+    (await db.post.count({
+      where: {
+        community: {
+          name: slug,
+        },
+      },
+    })) / INFINITE_SCROLLING_PAGENATION_RESULTS
+
   const community = await db.community.findFirst({
     where: {
       name: slug,
@@ -38,6 +47,7 @@ export default async function Page({ params }: CommunityPageProps) {
     user,
     communityName: community.name,
     initialPosts: community.posts,
+    limit: limit,
   }
 
   return (

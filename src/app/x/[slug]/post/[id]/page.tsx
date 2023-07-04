@@ -14,7 +14,7 @@ import { PostVoteServer } from "@/components/postVote/postVoteServer"
 
 interface PostPageProps {
   params: {
-    postId: string
+    id: string
   }
 }
 
@@ -25,10 +25,9 @@ type CustomPost = (Post & { votes: Vote[]; author: User }) | null
 
 export default async function Page({ params }: PostPageProps) {
   // TODO : Enable Caching later
-
   // check for if the post is cached
   const cachedPost = (await redis.hgetall(
-    `post:${params.postId}`
+    `post:${params.id}`
   )) as unknown as CachedPost
   // const cachedPost: CachedPost = null
   let post: CustomPost = null
@@ -36,7 +35,7 @@ export default async function Page({ params }: PostPageProps) {
   if (!cachedPost) {
     post = await db.post.findFirst({
       where: {
-        id: params.postId,
+        id: params.id,
       },
       include: {
         votes: true,
@@ -50,7 +49,7 @@ export default async function Page({ params }: PostPageProps) {
   const getData = async () => {
     const res = await db.post.findFirst({
       where: {
-        id: params.postId,
+        id: params.id,
       },
       include: {
         votes: true,
@@ -63,12 +62,14 @@ export default async function Page({ params }: PostPageProps) {
   return (
     <div>
       <div className="flex h-full flex-col items-center justify-between sm:flex-row sm:items-start">
-        <Suspense fallback={<PostVoteShell />}>
-          <PostVoteServer
-            postId={post?.id ?? cachedPost.id}
-            getData={getData}
-          />
-        </Suspense>
+        <div className="hidden md:block">
+          <Suspense fallback={<PostVoteShell />}>
+            <PostVoteServer
+              postId={post?.id ?? cachedPost.id}
+              getData={getData}
+            />
+          </Suspense>
+        </div>
         <div className="w-full flex-1 rounded-sm bg-background sm:w-0">
           <p className="mt-1 max-h-40 truncate text-xs">
             Posted by u/{post?.author.username ?? cachedPost.authorUserName}{" "}
@@ -78,6 +79,15 @@ export default async function Page({ params }: PostPageProps) {
             {post?.title ?? cachedPost.title}
           </h1>
           <EditorOutput content={post?.content ?? cachedPost.content} />
+          <div className="md:hidden mt-2">
+            <Suspense fallback={<PostVoteShell />}>
+              <PostVoteServer
+                postId={post?.id ?? cachedPost.id}
+                getData={getData}
+                className="p-0"
+              />
+            </Suspense>
+          </div>
           <Suspense
             fallback={<Icons.loading className="h-4 w-4 animate-spin" />}
           >

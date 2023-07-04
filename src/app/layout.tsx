@@ -26,7 +26,11 @@ interface RoolLayoutProps extends LayoutProps {
 
 export default function RootLayout({ children, authModel }: RoolLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="[scrollbar-gutter:stable]"
+    >
       <body
         className={cn(
           "min-h-screen bg-background pt-12 font-sans antialiased",

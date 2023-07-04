@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useTransition } from "react"
 import { votePostAction } from "@/actions/post"
-import type { PostVoteProps } from "@/types"
 import { Button } from "@/ui/button"
 import { Icons } from "@/util/icons"
 import { usePrevious } from "@mantine/hooks"
@@ -11,10 +10,18 @@ import type { VoteType } from "@prisma/client"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 
+export interface PostVoteProps extends React.HTMLAttributes<HTMLDivElement> {
+  postId: string
+  initialVoteAmt: number
+  initialVote?: VoteType | null
+}
+
 export default function PostVoteClient({
   initialVote,
   initialVoteAmt,
   postId,
+  className,
+  ...props
 }: PostVoteProps) {
   const [votesAmt, setVotesAmt] = useState(initialVoteAmt)
   const [currentVote, setCurrentVote] = useState(initialVote)
@@ -71,7 +78,13 @@ export default function PostVoteClient({
   }
 
   return (
-    <div className="flex gap-4 pb-4 pr-6 sm:w-20 sm:flex-col sm:gap-0 sm:pb-0">
+    <div
+      className={cn(
+        "flex gap-4 pb-4 pr-6 sm:w-20 sm:flex-col sm:gap-0 sm:pb-0",
+        className
+      )}
+      {...props}
+    >
       <Button
         disabled={isPending}
         onClick={() => {

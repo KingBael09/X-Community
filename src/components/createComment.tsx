@@ -35,6 +35,7 @@ interface CreateCommentProps {
   postId: string
   replyToId?: string
   isSubComment?: boolean
+  defaultInput?: string
   closeAction?: () => void
 }
 
@@ -42,6 +43,7 @@ export function CreateComment({
   postId,
   replyToId,
   isSubComment = false,
+  defaultInput,
   closeAction,
 }: CreateCommentProps) {
   const router = useRouter()
@@ -50,7 +52,7 @@ export function CreateComment({
   const form = useForm<ZComment>({
     resolver: zodResolver(CommentSchema),
     defaultValues: {
-      comment: "",
+      comment: defaultInput ?? "",
       postId,
       replyToId,
     },

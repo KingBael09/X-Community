@@ -9,6 +9,7 @@ import type { Comment, CommentVote, User } from "@prisma/client"
 import { type User as AuthUser } from "next-auth"
 
 import { formatTimeToNow } from "@/lib/utils"
+import { useOnClickOutside } from "@/hooks/use-on-click-outside"
 
 import { CommentVotes } from "./commentVotes"
 import { CreateComment } from "./createComment"
@@ -40,6 +41,10 @@ export function SubComment({
   const handleClose = () => {
     setIsReplying(false)
   }
+
+  useOnClickOutside(commentRef, () => {
+    setIsReplying(false)
+  })
 
   return (
     <div ref={commentRef} className="flex flex-col">
@@ -86,6 +91,7 @@ export function SubComment({
             postId={postId}
             replyToId={comment.replyToId ?? comment.id}
             closeAction={handleClose}
+            defaultInput={`@${comment.author.username as string} `}
           />
         </div>
       )}

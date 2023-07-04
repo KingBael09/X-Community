@@ -6,6 +6,8 @@ import { db } from "@/lib/db"
 import PostFeed from "./postFeed"
 
 export async function GeneralFeed() {
+  const limit = (await db.post.count()) / INFINITE_SCROLLING_PAGENATION_RESULTS
+
   const post = await db.post.findMany({
     take: INFINITE_SCROLLING_PAGENATION_RESULTS,
     orderBy: {
@@ -19,7 +21,7 @@ export async function GeneralFeed() {
     },
   })
 
-  return <PostFeed initialPosts={post} isMainFeed />
+  return <PostFeed initialPosts={post} isMainFeed limit={limit} />
 }
 
 interface PersonalFeedProps {
@@ -42,10 +44,21 @@ export async function PersonalFeed({ user }: PersonalFeedProps) {
     followedCommunitesIds.push(communityId)
   )
 
+  const limit =
+    (await db.post.count({
+      where: {
+        community: {
+          id: {
+            in: followedCommunitesIds,
+          },
+        },
+      },
+    })) / INFINITE_SCROLLING_PAGENATION_RESULTS
+
   const post = await db.post.findMany({
     where: {
       community: {
-        name: {
+        id: {
           in: followedCommunitesIds,
         },
       },
@@ -62,5 +75,5 @@ export async function PersonalFeed({ user }: PersonalFeedProps) {
     },
   })
 
-  return <PostFeed initialPosts={post} user={user} isMainFeed />
+  return <PostFeed initialPosts={post} user={user} isMainFeed limit={limit} />
 }

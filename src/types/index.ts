@@ -43,6 +43,7 @@ export interface FeedProps {
   communityName?: string
   user?: User | null
   isMainFeed?: boolean
+  limit: number
 }
 
 export interface SubscribeAction {
@@ -78,10 +79,4 @@ export interface UserAccountNavProps {
 
 export interface UserAvatarProps extends AvatarProps {
   user: Pick<User, "name" | "image">
-}
-
-export interface PostVoteProps {
-  postId: string
-  initialVoteAmt: number
-  initialVote?: VoteType | null
 }

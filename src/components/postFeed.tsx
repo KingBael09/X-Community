@@ -14,6 +14,7 @@ export default function PostFeed({
   communityName,
   user,
   isMainFeed = false,
+  limit,
 }: FeedProps) {
   const lastPostRef = useRef<HTMLElement>(null)
   const { ref, entry } = useIntersection({
@@ -21,27 +22,31 @@ export default function PostFeed({
     threshold: 1,
   })
 
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["load-post"],
-    async ({ pageParam = 1 }) => {
-      const query =
-        `/api/posts?limit=${INFINITE_SCROLLING_PAGENATION_RESULTS}&page=${
-          pageParam as string
-        }` + (!!communityName ? `&communityName=${communityName}` : "")
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+    useInfiniteQuery(
+      ["load-post"],
+      async ({ pageParam = 1 }) => {
+        const query =
+          `/api/posts?limit=${INFINITE_SCROLLING_PAGENATION_RESULTS}&page=${
+            pageParam as string
+          }` + (!!communityName ? `&communityName=${communityName}` : "")
 
-      const req = await fetch(query)
-      const res = (await req.json()) as ExtendedPost[]
-      // TODO:  Try server action here
-      return res
-    },
-    {
-      getNextPageParam: (_, pages) => pages.length + 1,
-      initialData: {
-        pages: [initialPosts],
-        pageParams: [1],
+        const req = await fetch(query)
+        const res = (await req.json()) as ExtendedPost[]
+        // TODO:  Try server action here
+        return res
       },
-    }
-  )
+      {
+        getNextPageParam: (lastPage, pages) => {
+          if (pages.length <= limit) return pages.length + 1
+          else return undefined
+        },
+        initialData: {
+          pages: [initialPosts],
+          pageParams: [1],
+        },
+      }
+    )
 
   useEffect(() => {
     if (entry?.isIntersecting) {
@@ -52,7 +57,7 @@ export default function PostFeed({
   // fattening array to join nextPage array to current array
   const posts = data?.pages.flatMap((page) => page) ?? initialPosts
 
-  if (user && posts.length === 0) {
+  if (user && initialPosts.length === 0) {
     return (
       <div className="flex items-center justify-center rounded-lg border border-accent/50 px-1 py-4 text-center leading-6 text-muted-foreground [text-wrap:balance]">
         {isMainFeed
@@ -87,6 +92,11 @@ export default function PostFeed({
         <li className="flex justify-center">
           <Icons.loading className="h-6 w-6 animate-spin" />
         </li>
+      )}
+      {!hasNextPage && (
+        <div className="rounded-lg border border-accent py-4 text-center text-muted-foreground">
+          You have reached the end!
+        </div>
       )}
     </ul>
   )

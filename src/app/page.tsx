@@ -14,9 +14,9 @@ export default async function Home() {
   return (
     <main>
       <h1 className="text-3xl font-bold md:text-4xl">Your Feed</h1>
-      <div className="grid grid-cols-1 gap-y-4 py-6 md:grid-cols-3 md:gap-x-4">
+      <div className="relative grid grid-cols-1 gap-y-4 py-6 md:grid-cols-3 md:gap-x-4">
         {user ? <PersonalFeed user={user} /> : <GeneralFeed />}
-        <div className="order-first h-fit overflow-hidden rounded-lg border border-accent md:order-last">
+        <div className="order-first h-fit overflow-hidden rounded-lg border border-accent md:sticky md:top-20 md:order-last">
           <div className="bg-accent px-6 py-4 ">
             {/* <div className="bg-emerald-100 px-6 py-4 dark:bg-emerald-700"> */}
             <p className="flex items-center gap-1.5 py-3 font-semibold">

@@ -15,11 +15,12 @@ export default function Post({ post, votesAmt, currentVote }: PostProps) {
   const pref = useRef<HTMLDivElement>(null)
   return (
     <div className="rounded-md bg-accent/50 shadow">
-      <div className="flex justify-between px-6 py-4">
+      <div className="flex justify-between p-4 md:px-6 md:py-4">
         <PostVoteClient
           initialVoteAmt={votesAmt}
           initialVote={currentVote?.type}
           postId={post.id}
+          className="hidden md:flex"
         />
         <div className="w-0 flex-1">
           <div className="mt-1 max-h-40 text-xs text-accent-foreground">
@@ -44,10 +45,7 @@ export default function Post({ post, votesAmt, currentVote }: PostProps) {
             <span>posted by u/{post.author.username}</span>{" "}
             {formatTimeToNow(new Date(post.createdAt))}
           </div>
-          <Link
-            href={`/x/${post.community.name}/post/${post.id}`}
-            // prefetch={false}
-          >
+          <Link href={`/x/${post.community.name}/post/${post.id}`}>
             <h1 className="py-2 text-lg font-semibold leading-6">
               {post.title}
             </h1>
@@ -63,11 +61,16 @@ export default function Post({ post, votesAmt, currentVote }: PostProps) {
           </div>
         </div>
       </div>
-      <div className="z-20 rounded-md p-4 text-sm sm:px-6">
+      <div className="z-20 flex rounded-md p-4 text-sm sm:px-6">
+        <PostVoteClient
+          initialVoteAmt={votesAmt}
+          initialVote={currentVote?.type}
+          postId={post.id}
+          className=" mr-auto p-0 md:hidden"
+        />
         <Link
           href={`/x/${post.community.name}/post/${post.id}`}
           className="flex w-fit items-center gap-2"
-          // prefetch={false}
         >
           <Icons.comment className="h-4 w-4" />
           <span>{post.comments.length} comments</span>

@@ -12,6 +12,7 @@ interface ServerPostVoteProps {
   initialVoteAmt?: number
   initialVote?: VoteType | null
   getData?: () => Promise<CustomPost>
+  className?: string
 }
 
 export async function PostVoteServer({
@@ -19,6 +20,7 @@ export async function PostVoteServer({
   initialVote,
   initialVoteAmt,
   getData,
+  className,
 }: ServerPostVoteProps) {
   const user = await getAuthSession()
 
@@ -46,6 +48,7 @@ export async function PostVoteServer({
       initialVote={_currentVote}
       initialVoteAmt={_votesAmt}
       postId={postId}
+      className={className}
     />
   )
 }
