@@ -4,11 +4,11 @@ import { Icons } from "@/util/icons"
 
 import { siteConfig } from "@/config/site"
 import { getAuthSession } from "@/lib/session"
-import { SearchBar } from "@/components/searchBar"
-import { ThemeToggle } from "@/components/toggleTheme"
-import { UserAccountNav } from "@/components/userAccountNav"
+import { SearchBar } from "@/components/search-bar"
+import { ThemeToggle } from "@/components/toggle-theme"
+import { UserAccountNav } from "@/components/user-account-nav"
 
-import { LinkHome } from "./redirectToHome"
+import { LinkHome } from "./custom-redirect-home"
 
 export default async function Navbar() {
   const user = await getAuthSession()

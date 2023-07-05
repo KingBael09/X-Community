@@ -16,20 +16,10 @@ import { Textarea } from "@/ui/textarea"
 import { Icons } from "@/util/icons"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { cn } from "@/lib/utils"
+import { CommentSchema, type ZComment } from "@/lib/validators/comment"
 import { toast } from "@/hooks/use-toast"
-
-const CommentSchema = z.object({
-  postId: z.string(),
-  comment: z
-    .string()
-    .min(1, { message: "Comments should be atleast one character long" }),
-  replyToId: z.string().optional(),
-})
-
-export type ZComment = z.infer<typeof CommentSchema>
 
 interface CreateCommentProps {
   postId: string
@@ -80,7 +70,7 @@ export function CreateComment({
   }
 
   return (
-    <div className="grid w-full gap-1.5">
+    <div className="grid w-full gap-1.5 py-2">
       <Form {...form}>
         <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
           <FormField
@@ -93,6 +83,7 @@ export function CreateComment({
                   <Textarea
                     placeholder="What are your throughts?"
                     rows={1}
+                    autoFocus
                     {...field}
                   />
                 </FormControl>

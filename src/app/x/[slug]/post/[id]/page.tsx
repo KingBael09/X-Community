@@ -1,16 +1,18 @@
 import { Suspense } from "react"
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { buttonVariants } from "@/ui/button"
 import { Icons } from "@/util/icons"
-import { type Post, type User, type Vote } from "@prisma/client"
+import type { Post, Prisma, User, Vote } from "@prisma/client"
 
 import type { CachedPost } from "@/types/redis"
+import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
 import { redis } from "@/lib/redis"
 import { formatTimeToNow } from "@/lib/utils"
-import { CommentsSection } from "@/components/commentsSection"
-import EditorOutput from "@/components/editorOutput"
-import { PostVoteServer } from "@/components/postVote/postVoteServer"
+import { CommentSection } from "@/components/comments/comment-section"
+import { EditorOutput } from "@/components/editor/editor-output"
+import { PostVoteServer } from "@/components/post-vote/post-vote-server"
 
 interface PostPageProps {
   params: {
@@ -18,13 +20,29 @@ interface PostPageProps {
   }
 }
 
-export const dynamic = "force-dynamic"
-export const fetchCache = "force-no-store"
+export async function generateMetadata({
+  params,
+}: PostPageProps): Promise<Metadata> {
+  const post = await db.post.findFirst({
+    where: {
+      id: params.id,
+    },
+  })
+
+  return {
+    title: `${siteConfig.name}: ${post?.title as string}`,
+    description: `${post?.title || "Post"} -${
+      post?.updatedAt.toDateString() as string
+    }`,
+  }
+}
+
+// export const dynamic = "force-dynamic"
+// export const fetchCache = "force-no-store"
 
 type CustomPost = (Post & { votes: Vote[]; author: User }) | null
 
 export default async function Page({ params }: PostPageProps) {
-  // TODO : Enable Caching later
   // check for if the post is cached
   const cachedPost = (await redis.hgetall(
     `post:${params.id}`
@@ -73,13 +91,17 @@ export default async function Page({ params }: PostPageProps) {
         <div className="w-full flex-1 rounded-sm bg-background sm:w-0">
           <p className="mt-1 max-h-40 truncate text-xs">
             Posted by u/{post?.author.username ?? cachedPost.authorUserName}{" "}
+            Posted by u/
             {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))}
           </p>
           <h1 className="py-2 text-xl font-semibold leading-6">
-            {post?.title ?? cachedPost.title}
+            {/* {post?.title ?? cachedPost.title} */}
+            {post?.title}
           </h1>
-          <EditorOutput content={post?.content ?? cachedPost.content} />
-          <div className="md:hidden mt-2">
+          <EditorOutput
+            content={post?.content ?? (cachedPost.content as Prisma.JsonValue)}
+          />
+          <div className="mt-2 md:hidden">
             <Suspense fallback={<PostVoteShell />}>
               <PostVoteServer
                 postId={post?.id ?? cachedPost.id}
@@ -91,7 +113,7 @@ export default async function Page({ params }: PostPageProps) {
           <Suspense
             fallback={<Icons.loading className="h-4 w-4 animate-spin" />}
           >
-            <CommentsSection postId={post?.id ?? cachedPost.id} />
+            <CommentSection postId={post?.id ?? cachedPost.id} />
           </Suspense>
         </div>
       </div>

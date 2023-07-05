@@ -4,7 +4,7 @@ import dynamic from "next/dynamic"
 import type { EditorOutputProps } from "@/types"
 import { Icons } from "@/util/icons"
 
-import { CustomCodeRenderer, CustomImageRenderer } from "./renderers"
+import { CustomCodeRenderer, CustomImageRenderer } from "./renderer"
 
 const Output = dynamic(
   () => import("editorjs-react-renderer").then((e) => e.default),
@@ -26,7 +26,7 @@ const renderers = {
   code: CustomCodeRenderer,
 }
 
-export default function EditorOutput({ content }: EditorOutputProps) {
+export function EditorOutput({ content }: EditorOutputProps) {
   return (
     <Output
       data={content}

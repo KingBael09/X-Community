@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { UserAvatar } from "@/common/avatar"
 import { Button } from "@/ui/button"
 import { Icons } from "@/util/icons"
 import type { Comment, CommentVote, User } from "@prisma/client"
@@ -10,9 +9,10 @@ import { type User as AuthUser } from "next-auth"
 
 import { formatTimeToNow } from "@/lib/utils"
 import { useOnClickOutside } from "@/hooks/use-on-click-outside"
+import { UserAvatar } from "@/components/user-avatar"
 
-import { CommentVotes } from "./commentVotes"
-import { CreateComment } from "./createComment"
+import { CommentVotes } from "./comment-vote"
+import { CreateComment } from "./create-comment"
 
 interface SubCommentProps {
   postId: string
@@ -22,7 +22,7 @@ interface SubCommentProps {
   user: AuthUser | null
 }
 
-export function SubComment({
+export function Comment({
   postId,
   comment,
   votesAmt,
@@ -47,7 +47,7 @@ export function SubComment({
   })
 
   return (
-    <div ref={commentRef} className="flex flex-col">
+    <div ref={commentRef} className="flex flex-col text-primary">
       <div className="flex items-center">
         <UserAvatar
           user={{
@@ -57,13 +57,13 @@ export function SubComment({
           className="h-6 w-6"
         />
         <div className="ml-2 flex items-center gap-x-2">
-          <p className="text-sm font-medium ">u/{comment.author.username}</p>
+          <p className="text-sm font-medium">u/{comment.author.username}</p>
           <p className="max-h-40 truncate text-xs text-muted-foreground">
             {formatTimeToNow(new Date(comment.createdAt))}
           </p>
         </div>
       </div>
-      <p className="mt-2 text-sm ">{comment.text}</p>
+      <p className="mt-2 text-left text-sm">{comment.text}</p>
       <div className="my-1 flex items-center gap-2">
         <CommentVotes
           commentId={comment.id}

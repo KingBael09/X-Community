@@ -7,9 +7,9 @@ import { Icons } from "@/util/icons"
 import { useIntersection } from "@mantine/hooks"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
-import Post from "./post"
+import { Post } from "../post"
 
-export default function PostFeed({
+export function PostFeed({
   initialPosts,
   communityName,
   user,

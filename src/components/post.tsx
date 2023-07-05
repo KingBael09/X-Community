@@ -8,10 +8,10 @@ import { Icons } from "@/util/icons"
 
 import { cn, formatTimeToNow } from "@/lib/utils"
 
-import EditorOutput from "./editorOutput"
-import PostVoteClient from "./postVote/postVoteClient"
+import { EditorOutput } from "./editor/editor-output"
+import { PostVoteClient } from "./post-vote/post-vote-client"
 
-export default function Post({ post, votesAmt, currentVote }: PostProps) {
+export function Post({ post, votesAmt, currentVote }: PostProps) {
   const pref = useRef<HTMLDivElement>(null)
   return (
     <div className="rounded-md bg-accent/50 shadow">

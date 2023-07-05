@@ -3,7 +3,7 @@ import type { Post, User, Vote, VoteType } from "@prisma/client"
 
 import { getAuthSession } from "@/lib/session"
 
-import PostVoteClient from "./postVoteClient"
+import { PostVoteClient } from "./post-vote-client"
 
 type CustomPost = (Post & { votes: Vote[]; author: User }) | null
 

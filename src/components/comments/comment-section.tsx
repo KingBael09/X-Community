@@ -3,33 +3,25 @@ import { Separator } from "@/ui/separator"
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
 
-import { CreateComment } from "./createComment"
-import { NestedComments } from "./nestedComments"
-import { SubComment } from "./subComment"
+import { Comment } from "./comment"
+import { CreateComment } from "./create-comment"
+import { NestedComments } from "./nested-comments"
 
 interface CommentsSectionProps {
   postId: string
 }
 
-export async function CommentsSection({ postId }: CommentsSectionProps) {
+export async function CommentSection({ postId }: CommentsSectionProps) {
   const user = await getAuthSession()
 
   const comments = await db.comment.findMany({
     where: {
       postId: postId,
-      // replyToId: null, // only fetch top-level comments
     },
     include: {
       author: true,
       votes: true,
       replies: true,
-      // replies: {
-      //   // first level replies
-      //   include: {
-      //     author: true,
-      //     votes: true,
-      //   },
-      // },
     },
   })
 
@@ -59,7 +51,7 @@ export async function CommentsSection({ postId }: CommentsSectionProps) {
                 className="flex flex-col overflow-y-auto"
               >
                 <div className="mb-2">
-                  <SubComment
+                  <Comment
                     postId={postId}
                     comment={topLevelComment}
                     votesAmt={topLevelCommentVotesAmt}

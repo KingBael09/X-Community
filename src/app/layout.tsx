@@ -1,7 +1,5 @@
 import "@/global-style"
 
-import Navbar from "@/common/navbar"
-import Providers from "@/common/providers/"
 import type { LayoutProps } from "@/types"
 import { Analytics } from "@/util/analytics"
 import { TailwindIndicator } from "@/util/tailwind-indicator"
@@ -10,6 +8,8 @@ import { Toaster } from "@/util/toaster"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import Navbar from "@/components/navbar/navbar"
+import { Providers } from "@/components/util/providers"
 
 export const metadata = {
   title: siteConfig.name,
@@ -29,7 +29,7 @@ export default function RootLayout({ children, authModel }: RoolLayoutProps) {
     <html
       lang="en"
       suppressHydrationWarning
-      className="[scrollbar-gutter:stable]"
+      // className="[scrollbar-gutter:stable]"
     >
       <body
         className={cn(

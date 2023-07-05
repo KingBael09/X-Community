@@ -1,26 +1,28 @@
 "use client"
 
 import { useEffect, useState, useTransition } from "react"
-import { voteCommentAction } from "@/actions/comment"
+import { votePostAction } from "@/actions/post"
 import { Button } from "@/ui/button"
 import { Icons } from "@/util/icons"
 import { usePrevious } from "@mantine/hooks"
-import type { CommentVote, VoteType } from "@prisma/client"
+import type { VoteType } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 
-export interface CommentVoteProps {
-  commentId: string
+export interface PostVoteProps extends React.HTMLAttributes<HTMLDivElement> {
+  postId: string
   initialVoteAmt: number
-  initialVote?: Pick<CommentVote, "type">
+  initialVote?: VoteType | null
 }
 
-export function CommentVotes({
+export function PostVoteClient({
   initialVote,
   initialVoteAmt,
-  commentId,
-}: CommentVoteProps) {
+  postId,
+  className,
+  ...props
+}: PostVoteProps) {
   const [votesAmt, setVotesAmt] = useState(initialVoteAmt)
   const [currentVote, setCurrentVote] = useState(initialVote)
   const prevVote = usePrevious(currentVote)
@@ -37,22 +39,22 @@ export function CommentVotes({
     startTransition(async () => {
       try {
         // Doing optimistic updates
-        if (currentVote?.type === type) {
+        if (currentVote === type) {
           // User is voting the same way again, so remove their vote
           setCurrentVote(undefined)
           if (type === "UP") setVotesAmt((prev) => prev - 1)
           else if (type === "DOWN") setVotesAmt((prev) => prev + 1)
         } else {
           // User is voting in the opposite direction, so subtract 2
-          setCurrentVote({ type })
+          setCurrentVote(type)
           if (type === "UP") setVotesAmt((prev) => prev + (currentVote ? 2 : 1))
           else if (type === "DOWN")
             setVotesAmt((prev) => prev - (currentVote ? 2 : 1))
         }
         // performing updates
-        const res = await voteCommentAction({
+        const res = await votePostAction({
           type,
-          commentId,
+          postId,
         })
 
         toast({
@@ -74,8 +76,15 @@ export function CommentVotes({
       }
     })
   }
+
   return (
-    <div className="flex gap-1">
+    <div
+      className={cn(
+        "flex gap-4 pb-4 pr-6 sm:w-20 sm:flex-col sm:gap-0 sm:pb-0",
+        className
+      )}
+      {...props}
+    >
       <Button
         disabled={isPending}
         onClick={() => {
@@ -87,7 +96,7 @@ export function CommentVotes({
       >
         <Icons.up
           className={cn("h-5 w-5", {
-            "text-emerald-500 fill-emerald-500": currentVote?.type === "UP",
+            "text-emerald-500 fill-emerald-500": currentVote === "UP",
           })}
         />
       </Button>
@@ -109,7 +118,7 @@ export function CommentVotes({
       >
         <Icons.down
           className={cn("h-5 w-5", {
-            "text-red-500 fill-red-500": currentVote?.type === "DOWN",
+            "text-red-500 fill-red-500": currentVote === "DOWN",
           })}
         />
       </Button>

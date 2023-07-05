@@ -9,6 +9,7 @@ import {
   Loader2,
   MessageSquare,
   Moon,
+  MoreHorizontal,
   SunMedium,
   Twitter,
   User,
@@ -35,6 +36,7 @@ export const Icons = {
   down: ArrowBigDown,
   back: ChevronLeft,
   bird: Bird,
+  more: MoreHorizontal,
   google: (props: LucideProps) => (
     <svg {...props} viewBox="0 0 24 24">
       <path

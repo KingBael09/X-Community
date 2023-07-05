@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { UserAvatar } from "@/common/avatar"
 import type { UserAccountNavProps } from "@/types"
 import {
   DropdownMenu,
@@ -11,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
 import { signOut } from "next-auth/react"
+
+import { UserAvatar } from "@/components/user-avatar"
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
   const handleSignOut = async (e: Event) => {

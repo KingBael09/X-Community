@@ -1,12 +1,13 @@
-import { UserAvatar } from "@/common/avatar"
 import type { MiniCreatePostProps } from "@/types"
 import { Button } from "@/ui/button"
 import { Input } from "@/ui/input"
 import { Icons } from "@/util/icons"
 
-import { PostSubmitLink } from "./customPostSubmitLink"
+import { UserAvatar } from "@/components/user-avatar"
 
-export default function MiniCreatePost({ user }: MiniCreatePostProps) {
+import { PostSubmitLink } from "./custom-post-link"
+
+export function MiniCreatePost({ user }: MiniCreatePostProps) {
   return (
     <div className="overflow-hidden rounded-md bg-background shadow">
       <PostSubmitLink className="flex h-full flex-col justify-between gap-2 px-6 py-4 md:flex-row md:gap-6">
@@ -34,5 +35,3 @@ export default function MiniCreatePost({ user }: MiniCreatePostProps) {
     </div>
   )
 }
-
-// TODO: Could be Optimized

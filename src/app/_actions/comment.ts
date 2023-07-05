@@ -2,8 +2,7 @@
 
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
-import type { ZCommentVote } from "@/lib/validators/post"
-import type { ZComment } from "@/components/createComment"
+import type { ZComment, ZCommentVote } from "@/lib/validators/comment"
 
 export async function commentPostAction({
   postId,

@@ -2,7 +2,12 @@ import { notFound } from "next/navigation"
 import type { CommunityPageProps } from "@/types"
 
 import { db } from "@/lib/db"
-import Editor from "@/components/editor"
+import { Editor } from "@/components/editor/editor"
+
+export const metadata = {
+  title: "Create Post",
+  description: "Create a post in a community",
+}
 
 export default async function Page({ params }: CommunityPageProps) {
   const community = await db.community.findFirst({

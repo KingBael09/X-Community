@@ -17,10 +17,3 @@ export const PostVoteSchema = z.object({
 })
 
 export type ZPostVote = z.infer<typeof PostVoteSchema>
-
-export const CommentVoteSchema = z.object({
-  commentId: z.string(),
-  type: z.enum(["UP", "DOWN"]),
-})
-
-export type ZCommentVote = z.infer<typeof CommentVoteSchema>

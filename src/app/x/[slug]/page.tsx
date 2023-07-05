@@ -4,8 +4,8 @@ import type { CommunityPageProps, FeedProps } from "@/types"
 
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
-import MiniCreatePost from "@/components/miniCreatePost"
-import PostFeed from "@/components/postFeed"
+import { MiniCreatePost } from "@/components/dummy/mini-create-post"
+import { PostFeed } from "@/components/post-feed/post-feed"
 
 export default async function Page({ params }: CommunityPageProps) {
   const { slug } = params

@@ -1,5 +1,10 @@
-import { CommunityCreateForm } from "@/forms/XForm"
 import { Separator } from "@/ui/separator"
+
+import { CommunityCreateForm } from "@/components/forms/com-create-form"
+
+export const metadata = {
+  title: "Create Community",
+}
 
 export default function Page() {
   return (

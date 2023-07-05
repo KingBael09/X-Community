@@ -6,7 +6,7 @@ import { format } from "date-fns"
 
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
-import { SubscribeLeaveToggle } from "@/components/subscribeLeaveToggle"
+import { SubscribeLeaveToggle } from "@/components/sub-leave-toggle"
 
 export default async function Layout({
   children,

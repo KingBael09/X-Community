@@ -3,7 +3,7 @@ import type { User } from "next-auth"
 
 import { db } from "@/lib/db"
 
-import PostFeed from "./postFeed"
+import { PostFeed } from "./post-feed"
 
 export async function GeneralFeed() {
   const limit = (await db.post.count()) / INFINITE_SCROLLING_PAGENATION_RESULTS

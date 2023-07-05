@@ -2,7 +2,7 @@ import type { LayoutProps } from "@/types"
 
 import CloseModal from "./close-modal"
 
-export default function InterceptModal({ children }: LayoutProps) {
+export function InterceptModal({ children }: LayoutProps) {
   return (
     <div className="fixed inset-0 z-10 bg-black/20 backdrop-blur-sm">
       <div className="container mx-auto flex h-full max-w-lg items-center">

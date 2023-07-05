@@ -4,10 +4,10 @@ import { Icons } from "@/util/icons"
 
 import { siteConfig } from "@/config/site"
 import { getAuthSession } from "@/lib/session"
-import { GeneralFeed, PersonalFeed } from "@/components/mainFeed"
+import { GeneralFeed, PersonalFeed } from "@/components/post-feed/main-feed"
 
-export const dynamic = "force-dynamic"
-export const fetchCache = "force-no-store"
+// export const dynamic = "force-dynamic"
+// export const fetchCache = "force-no-store"
 
 export default async function Home() {
   const user = await getAuthSession()

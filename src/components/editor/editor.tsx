@@ -21,7 +21,7 @@ import { uploadFiles } from "@/lib/upload"
 import { PostSchema, type ZPost } from "@/lib/validators/post"
 import { toast } from "@/hooks/use-toast"
 
-export default function Editor({ communityId }: EditorProps) {
+export function Editor({ communityId }: EditorProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
@@ -37,7 +37,7 @@ export default function Editor({ communityId }: EditorProps) {
   })
 
   const ref = useRef<EditorJS>()
-  const _titleRef = useRef<HTMLTextAreaElement | null>(null) //our ref for title
+  const _titleRef = useRef<HTMLTextAreaElement | null>(null)
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default
@@ -84,7 +84,6 @@ export default function Editor({ communityId }: EditorProps) {
                     files: [file],
                     endpoint: "imageUploader",
                   })
-                  //   const [res] = await uploadFiles([file], "imageUploader")
 
                   return {
                     success: 1,

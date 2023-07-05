@@ -1,12 +1,11 @@
-import type { Metadata } from "next"
 import Link from "next/link"
-import SignUp from "@/common/auth"
 import { buttonVariants } from "@/ui/button"
 import { Icons } from "@/util/icons"
 
 import { cn } from "@/lib/utils"
+import SignUp from "@/components/auth-form-template"
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Sign Up",
   description: "Create an account?",
 }
