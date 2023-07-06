@@ -24,10 +24,10 @@ export function MiniCreatePost({ user }: MiniCreatePostProps) {
           <Input readOnly placeholder="Create Post" />
         </div>
         <div className="flex justify-end gap-2">
-          <Button variant="ghost">
+          <Button variant="ghost" aria-label="image">
             <Icons.image />
           </Button>
-          <Button variant="ghost">
+          <Button variant="ghost" aria-label="link">
             <Icons.link />
           </Button>
         </div>

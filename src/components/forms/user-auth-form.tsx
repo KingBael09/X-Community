@@ -33,6 +33,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     <div className={cn("flex justify-center", className)} {...props}>
       <Button
         type="button"
+        aria-label="Auth with google"
         size="sm"
         className="w-full"
         onClick={() => void handleSubmit()}

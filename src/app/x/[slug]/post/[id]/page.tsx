@@ -90,16 +90,18 @@ export default async function Page({ params }: PostPageProps) {
         </div>
         <div className="w-full flex-1 rounded-sm bg-background sm:w-0">
           <p className="mt-1 max-h-40 truncate text-xs">
-            Posted by u/{post?.author.username ?? cachedPost.authorUserName}{" "}
+            Posted by u/{post?.author.username ?? cachedPost?.authorUserName}{" "}
             Posted by u/
-            {formatTimeToNow(new Date(post?.createdAt ?? cachedPost.createdAt))}
+            {formatTimeToNow(
+              new Date(post?.createdAt ?? cachedPost?.createdAt)
+            )}
           </p>
           <h1 className="py-2 text-xl font-semibold leading-6">
             {/* {post?.title ?? cachedPost.title} */}
             {post?.title}
           </h1>
           <EditorOutput
-            content={post?.content ?? (cachedPost.content as Prisma.JsonValue)}
+            content={post?.content ?? (cachedPost?.content as Prisma.JsonValue)}
           />
           <div className="mt-2 md:hidden">
             <Suspense fallback={<PostVoteShell />}>
@@ -113,7 +115,7 @@ export default async function Page({ params }: PostPageProps) {
           <Suspense
             fallback={<Icons.loading className="h-4 w-4 animate-spin" />}
           >
-            <CommentSection postId={post?.id ?? cachedPost.id} />
+            <CommentSection postId={post?.id ?? cachedPost?.id} />
           </Suspense>
         </div>
       </div>

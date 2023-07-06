@@ -61,7 +61,7 @@ export function PostFeed({
     return (
       <div className="flex items-center justify-center rounded-lg border border-accent/50 px-1 py-4 text-center leading-6 text-muted-foreground [text-wrap:balance]">
         {isMainFeed
-          ? "Subscribe to some communities to view to see them of feed!"
+          ? "Subscribe to some communities to view to see them on your feed!"
           : "No Posts Yet!"}
       </div>
     )
@@ -94,9 +94,9 @@ export function PostFeed({
         </li>
       )}
       {!hasNextPage && (
-        <div className="rounded-lg border border-accent py-4 text-center text-muted-foreground">
+        <li className="rounded-lg border border-accent py-4 text-center text-muted-foreground">
           You have reached the end!
-        </div>
+        </li>
       )}
     </ul>
   )

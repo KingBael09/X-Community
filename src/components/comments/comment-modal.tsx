@@ -18,6 +18,7 @@ export default function CommentModal({ children }: LayoutProps) {
         <Button
           size="sm"
           variant="outline"
+          aria-label="More Comments"
           className="my-3 w-full rounded-full px-4 text-muted-foreground"
         >
           <Icons.more />
