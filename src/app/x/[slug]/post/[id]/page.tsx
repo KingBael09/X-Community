@@ -30,7 +30,7 @@ export async function generateMetadata({
   })
 
   return {
-    title: `${siteConfig.name}: ${post?.title as string}`,
+    title: `${post?.title as string} : ${siteConfig.name}`,
     description: `${post?.title || "Post"} -${
       post?.updatedAt.toDateString() as string
     }`,

@@ -7,6 +7,7 @@ import { format } from "date-fns"
 import { db } from "@/lib/db"
 import { getAuthSession } from "@/lib/session"
 import { SubscribeLeaveToggle } from "@/components/sub-leave-toggle"
+import { ToFeedButton } from "@/components/to-feed-button"
 
 export default async function Layout({
   children,
@@ -54,14 +55,14 @@ export default async function Layout({
   })
 
   return (
-    <div className="mx-auto h-full max-w-7xl pt-12 sm:container">
+    <div className="mx-auto h-full max-w-7xl pt-6 sm:container">
       <div>
-        {/* Button to take us back */}
+        <ToFeedButton className="mb-2" />
         <div className="relative grid grid-cols-1 gap-y-4 py-6 md:grid-cols-3 md:gap-x-4">
           <div className="col-span-2 flex flex-col space-y-6">{children}</div>
           <div className="order-first hidden h-fit overflow-hidden rounded-lg border border-accent md:sticky md:top-20 md:order-last md:block">
             <div className="px-6 py-4">
-              <p className="py-3 font-semibold">About x/{community.name}</p>
+              <p className="py-3 font-semibold ">About x/{community.name}</p>
             </div>
             <dl className="divide-y divide-accent bg-background px-6 py-4 text-sm leading-6">
               <div className="flex justify-between gap-x-4 py-3">

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { authOptions } from "@/lib/auth"
 import { getAuthSession } from "@/lib/session"
 import { UserNameForm } from "@/components/forms/user-name-form"
+import { ThemeSetting } from "@/components/theme-setting"
 
 export const metadata = {
   title: "Settings",
@@ -18,11 +19,10 @@ export default async function Page() {
       <div className="grid items-start gap-8">
         <h1 className="text-3xl font-bold md:text-4xl">Settings</h1>
       </div>
-      <div className="mt-4 grid gap-2">
-        <UserNameForm username={user.username} />
-      </div>
+      <UserNameForm username={user.username} className="mt-4" />
+      <ThemeSetting className="mt-4" />
       <div className="mt-4 flex justify-center text-muted-foreground">
-        More Settings Coming Soon
+        More Settings Coming Soon!
       </div>
     </div>
   )

@@ -21,11 +21,11 @@ import { useForm } from "react-hook-form"
 import { UserNameFormSchema, type ZUser } from "@/lib/validators/user"
 import { toast } from "@/hooks/use-toast"
 
-interface UserNameFormProps {
+interface UserNameFormProps extends React.HTMLAttributes<HTMLDivElement> {
   username?: string | null
 }
 
-export function UserNameForm({ username }: UserNameFormProps) {
+export function UserNameForm({ username, ...props }: UserNameFormProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -58,7 +58,7 @@ export function UserNameForm({ username }: UserNameFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}>
-        <Card>
+        <Card {...props}>
           <CardHeader>
             <CardTitle>Your Username</CardTitle>
             <CardDescription>

@@ -8,6 +8,7 @@ import { Toaster } from "@/util/toaster"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
+import { ScrollBar } from "@/components/ui/scroll-area"
 import Navbar from "@/components/navbar/navbar"
 import { Providers } from "@/components/util/providers"
 
@@ -26,11 +27,7 @@ interface RoolLayoutProps extends LayoutProps {
 
 export default function RootLayout({ children, authModel }: RoolLayoutProps) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      // className="[scrollbar-gutter:stable]"
-    >
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background pt-12 font-sans antialiased",
