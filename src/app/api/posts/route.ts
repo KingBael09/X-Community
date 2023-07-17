@@ -52,6 +52,7 @@ export async function GET(req: Request) {
         },
       }
     }
+    // TODO: This could break in prisma 5
     const numLimit = parseInt(limit)
     const numPage = parseInt(page)
 

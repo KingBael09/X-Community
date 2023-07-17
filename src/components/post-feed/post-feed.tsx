@@ -21,7 +21,6 @@ export function PostFeed({
     root: lastPostRef.current,
     threshold: 1,
   })
-
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery(
       ["load-post"],

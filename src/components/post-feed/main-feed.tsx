@@ -20,7 +20,6 @@ export async function GeneralFeed() {
       community: true,
     },
   })
-
   return <PostFeed initialPosts={post} isMainFeed limit={limit} />
 }
 
@@ -74,6 +73,5 @@ export async function PersonalFeed({ user }: PersonalFeedProps) {
       community: true,
     },
   })
-
   return <PostFeed initialPosts={post} user={user} isMainFeed limit={limit} />
 }
